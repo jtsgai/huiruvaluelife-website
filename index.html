@@ -96,6 +96,16 @@
             left: 0;
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -219,39 +229,98 @@
 
         .professional-photo {
             width: 350px;
-            height: 350px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #E74C3C, #C0392B);
+            height: 300px;
+            margin: 0 auto;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto;
+        }
+
+        .heart-shape {
+            width: 300px;
+            height: 270px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #E74C3C 50%, #C0392B 100%);
+            clip-path: path('M150,25 C120,5 80,5 80,40 C80,55 90,70 150,130 C210,70 220,55 220,40 C220,5 180,5 150,25 Z');
+            transform: scale(1.2);
             position: relative;
-            box-shadow: 0 20px 40px rgba(231, 76, 60, 0.2);
+            filter: drop-shadow(0 15px 35px rgba(231, 76, 60, 0.4)) drop-shadow(0 5px 15px rgba(231, 76, 60, 0.2));
         }
 
-        .professional-photo::before {
-            content: '慧汝老师';
-            color: white;
-            font-size: 2rem;
-            font-weight: 600;
-        }
-
-        .professional-photo::after {
+        .heart-shape::before {
             content: '';
             position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 2px solid rgba(231, 76, 60, 0.3);
-            border-radius: 50%;
-            animation: pulse 3s infinite;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+            clip-path: inherit;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.7; }
+        .heart-shape::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            bottom: 3px;
+            background: linear-gradient(315deg, rgba(0, 0, 0, 0.2) 0%, transparent 50%, rgba(255, 255, 255, 0.1) 100%);
+            clip-path: inherit;
+            z-index: -1;
+        }
+
+        .photo-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            color: white;
+            text-align: center;
+        }
+
+        .photo-content .title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.2);
+            white-space: nowrap;
+            letter-spacing: 1px;
+        }
+
+        .heart-pulse {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 380px;
+            height: 330px;
+            pointer-events: none;
+        }
+
+        .heart-pulse .heart-outline {
+            width: 320px;
+            height: 290px;
+            border: 3px solid rgba(231, 76, 60, 0.4);
+            clip-path: path('M160,25 C130,5 90,5 90,40 C90,55 100,70 160,130 C220,70 230,55 230,40 C230,5 190,5 160,25 Z');
+            transform: scale(1.2);
+            animation: heartPulse 3s infinite;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.1));
+            filter: blur(0.5px);
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { 
+                transform: scale(1.2); 
+                opacity: 0.6; 
+                filter: blur(0.5px);
+            }
+            50% { 
+                transform: scale(1.3); 
+                opacity: 0.3; 
+                filter: blur(1px);
+            }
         }
 
         /* About Section */
@@ -352,7 +421,7 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
         }
 
@@ -626,10 +695,44 @@
             margin-top: 2rem;
         }
 
-        /* Responsive Design */
+        /* Mobile Responsive Design */
         @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
             .nav-links {
-                display: none;
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 2rem 0;
+                transition: left 0.3s ease;
+                gap: 1.5rem;
+            }
+
+            .nav-links.mobile-active {
+                left: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 1rem 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 100px 0 50px;
             }
 
             .hero-content {
@@ -639,25 +742,202 @@
             }
 
             .hero-text h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+                margin-bottom: 1rem;
             }
 
-            .about-content {
-                grid-template-columns: 1fr;
+            .hero-text .subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
             }
 
-            .contact-content {
-                grid-template-columns: 1fr;
+            .hero-text p {
+                font-size: 1rem;
+                margin-bottom: 2rem;
             }
 
             .professional-photo {
                 width: 280px;
+                height: 240px;
+            }
+
+            .heart-shape {
+                width: 240px;
+                height: 216px;
+                clip-path: path('M120,20 C100,4 70,4 70,32 C70,44 76,56 120,104 C164,56 170,44 170,32 C170,4 140,4 120,20 Z');
+                transform: scale(1.3);
+                filter: drop-shadow(0 12px 28px rgba(231, 76, 60, 0.35)) drop-shadow(0 4px 12px rgba(231, 76, 60, 0.2));
+            }
+
+            .heart-pulse {
+                width: 320px;
                 height: 280px;
+            }
+
+            .heart-pulse .heart-outline {
+                width: 260px;
+                height: 234px;
+                clip-path: path('M130,20 C110,4 80,4 80,32 C80,44 86,56 130,104 C174,56 180,44 180,32 C180,4 150,4 130,20 Z');
+                transform: scale(1.3);
+                border: 2.5px solid rgba(231, 76, 60, 0.4);
+            }
+
+            .photo-content .name {
+                font-size: 1.4rem;
+            }
+
+            .photo-content .title {
+                font-size: 1rem;
             }
 
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
+                gap: 1rem;
+            }
+
+            .cta-primary,
+            .cta-secondary {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+                padding: 1rem 1.5rem;
+            }
+
+            .about {
+                padding: 4rem 0;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-text h2 {
+                font-size: 2.2rem;
+                text-align: center;
+            }
+
+            .about-text .quote {
+                font-size: 1.1rem;
+            }
+
+            .services {
+                padding: 4rem 0;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .service-card {
+                padding: 2rem;
+            }
+
+            .testimonials {
+                padding: 4rem 0;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .contact {
+                padding: 4rem 0;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .contact-info h2 {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .contact-details {
+                gap: 1rem;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+
+            .appointment-form {
+                padding: 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .logo-image {
+                width: 40px;
+                height: 40px;
+                margin-right: 8px;
+            }
+
+            .hero-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .professional-photo {
+                width: 240px;
+                height: 200px;
+            }
+
+            .heart-shape {
+                width: 200px;
+                height: 180px;
+                clip-path: path('M100,18 C85,3 60,3 60,28 C60,38 65,48 100,88 C135,48 140,38 140,28 C140,3 115,3 100,18 Z');
+                transform: scale(1.4);
+                filter: drop-shadow(0 10px 24px rgba(231, 76, 60, 0.3)) drop-shadow(0 3px 10px rgba(231, 76, 60, 0.15));
+            }
+
+            .photo-content .title {
+                font-size: 1.4rem;
+            }
+
+            .heart-pulse {
+                width: 280px;
+                height: 240px;
+            }
+
+            .heart-pulse .heart-outline {
+                width: 220px;
+                height: 198px;
+                clip-path: path('M110,18 C95,3 70,3 70,28 C70,38 75,48 110,88 C145,48 150,38 150,28 C150,3 125,3 110,18 Z');
+                transform: scale(1.4);
+                border: 2px solid rgba(231, 76, 60, 0.3);
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .about-text h2 {
+                font-size: 1.8rem;
+            }
+
+            .contact-info h2 {
+                font-size: 1.8rem;
             }
         }
 
@@ -721,8 +1001,9 @@
                 <li><a href="#about">关于慧汝</a></li>
                 <li><a href="#services">服务项目</a></li>
                 <li><a href="#testimonials">客户见证</a></li>
-                <li><a href="#contact">预约咨询</a></li>
+                <li><a href="#contact">预约慧汝文化</a></li>
             </ul>
+            <button class="mobile-menu-btn">☰</button>
         </nav>
     </header>
 
@@ -740,7 +1021,15 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <div class="professional-photo"></div>
+                    <div class="professional-photo">
+                        <div class="heart-shape"></div>
+                        <div class="photo-content">
+                            <div class="title">Value Life</div>
+                        </div>
+                        <div class="heart-pulse">
+                            <div class="heart-outline"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -921,7 +1210,7 @@
                     </div>
                 </div>
                 <div class="appointment-form fade-in">
-                    <h3>预约免费咨询</h3>
+                    <h3>预约慧汝文化</h3>
                     <form>
                         <div class="form-group">
                             <label for="name">姓名 *</label>
@@ -1003,6 +1292,23 @@
     </footer>
 
     <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-active');
+            mobileMenuBtn.textContent = navLinks.classList.contains('mobile-active') ? '✕' : '☰';
+        });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('mobile-active');
+                mobileMenuBtn.textContent = '☰';
+            });
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1102,30 +1408,6 @@
             });
         });
 
-        // Add typing effect to hero title
-        function typeWriter(element, text, speed = 100) {
-            let i = 0;
-            element.innerHTML = '';
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-
-        // Initialize typing effect when page loads
-        window.addEventListener('load', () => {
-            const heroTitle = document.querySelector('.hero-text h1');
-            const originalText = heroTitle.innerHTML;
-            setTimeout(() => {
-                typeWriter(heroTitle, originalText.replace(/<[^>]*>/g, ''), 50);
-            }, 1000);
-        });
-
         // Add parallax effect to hero section
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
@@ -1136,21 +1418,23 @@
             }
         });
 
-        // Mobile menu toggle (for future mobile optimization)
-        const mobileMenuToggle = () => {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('mobile-active');
-        };
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav') && navLinks.classList.contains('mobile-active')) {
+                navLinks.classList.remove('mobile-active');
+                mobileMenuBtn.textContent = '☰';
+            }
+        });
 
-        // Add mobile menu button if screen is small
-        if (window.innerWidth <= 768) {
-            const nav = document.querySelector('nav');
-            const menuBtn = document.createElement('button');
-            menuBtn.innerHTML = '☰';
-            menuBtn.className = 'mobile-menu-btn';
-            menuBtn.onclick = mobileMenuToggle;
-            nav.appendChild(menuBtn);
-        }
+        // Prevent body scroll when mobile menu is open
+        const body = document.body;
+        new MutationObserver(() => {
+            if (navLinks.classList.contains('mobile-active')) {
+                body.style.overflow = 'hidden';
+            } else {
+                body.style.overflow = '';
+            }
+        }).observe(navLinks, { attributes: true, attributeFilter: ['class'] });
     </script>
 </body>
 </html>
